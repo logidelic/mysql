@@ -14,9 +14,11 @@ function check(host, port, callback) {
   }, TCP_TIMEOUT);
 
   socket.once('data', function () {
-    clearTimeout(timer);
-    socket.destroy();
-    callback(true);
+    setImmediate(() => {
+      clearTimeout(timer);
+      socket.destroy();
+      callback(true);
+    });
   });
 
   socket.on('error', function () {
